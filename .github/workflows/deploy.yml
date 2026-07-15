@@ -26,7 +26,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - name: Install dependencies
@@ -40,10 +40,11 @@ jobs:
       - name: Disable Jekyll (serve _next/ folder)
         run: touch out/.nojekyll
 
+      # Pages must be enabled once in repo Settings → Pages → Source:
+      # "GitHub Actions" (the Actions token can't create the Pages site itself).
+      # After that, this reads the existing config and every deploy is automatic.
       - name: Configure Pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
