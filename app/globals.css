@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --paper: #edeff3;
+  --ink: #171b33;
+  --mid: #5b6180;
+  --signal: #3d3bf3;
+  /* hairline used by the graph-paper grid */
+  --grid-line: rgba(23, 27, 51, 0.05);
+  --grid-line-strong: rgba(23, 27, 51, 0.08);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Cool grey-blue page ground with a very subtle graph-paper grid.
+     Two scales — fine 22px lines plus a heavier 110px "centimetre" line —
+     so it reads as squared exam paper, not decoration. */
+  body {
+    background-color: var(--paper);
+    background-image:
+      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to right, var(--grid-line-strong) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line-strong) 1px, transparent 1px);
+    background-size:
+      22px 22px,
+      22px 22px,
+      110px 110px,
+      110px 110px;
+    color: var(--ink);
+  }
+
+  /* Visible focus everywhere — the whole page is usable from the keyboard. */
+  :focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+
+  ::selection {
+    background: rgba(61, 59, 243, 0.16);
+  }
+}
+
+@layer components {
+  /* Inverted grid for dark (navy) sections. */
+  .grid-invert {
+    background-image:
+      linear-gradient(to right, rgba(237, 239, 243, 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(237, 239, 243, 0.06) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+}
+
+/* Respect reduced-motion: strip transitions/animations, keep everything
+   functional. The swipe stack detects this in JS and commits instantly. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
